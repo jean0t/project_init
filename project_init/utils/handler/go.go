@@ -17,7 +17,12 @@ func NewGoHandler(cfg *utils.Config, dirs []string) Handler {
 
 func (g *GoHandler) createLanguageExtras() error {
     var mainFile string = filepath.Join(p.Cfg.Name, "cmd", "main.go")
-    var content string = "test"
+    var content string = `package main
+import "fmt"
+
+func main() {
+    fmt.Println("Hello World!")
+}`
     file, err := os.Create(mainFile)
     if err != nil {
         return err

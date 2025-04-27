@@ -17,7 +17,12 @@ func NewPythonHandler(cfg *utils.Config, dirs []string) Handler {
 
 func (p *PythonHandler) createLanguageExtras() error {
     var mainFile string = filepath.Join(p.Cfg.Name, "src", "main.py")
-    var content string = "test"
+    var content string = `def main():
+    print("Hello World!")
+
+if __name__ == "__main__":
+    main()
+`
     file, err := os.Create(mainFile)
     if err != nil {
         return err

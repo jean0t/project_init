@@ -7,6 +7,7 @@ import (
     "os/exec"
     "path/filepath"
     "strings"
+    "text/template"
     "project_init/project_init/utils"
 )
 
@@ -41,36 +42,47 @@ func (b *BaseHandler) Scaffold() error {
 
 func (b *BaseHandler) createLicense() error {
     var licensePath string = filepath.Join(b.Cfg.Name, "LICENSE")
-    var content string = "test"
+    var data Data = CreateData(b.Cfg.Name)
+    var template *template.Template
+
+    switch strings.ToLower(b.Cfg.License) {
+        case "gpl-3":
+            template, err := template.New("gpl-3").Parse(gpl3Tmpl)
+            if err != nil {
+                return err
+            }
+
+        case "mit":
+            template, err := template.New("gpl-3").Parse(mitTmpl)
+            if err != nil {
+                return err
+            }
+    }
+
     file, err := os.Create(licensePath)
     if err != nil {
         return err
     }
     defer file.Close()
 
-    _, err = file.WriteString(content)
-    if err != nil {
-        return err
-    }
-
-    return nil
+    return t.Execute(file, data)
 }
 
 func (b *BaseHandler) createReadme() error {
     var licensePath string = filepath.Join(b.Cfg.Name, "README.md")
-    var content string = "test"
+    tmpl, err := template.New("readme").Parse(readmeTmpl)
+    if err != nil {
+        return err
+    }
+
+    var data Data = CreateData(b.Cfg.Name)
     file, err := os.Create(licensePath)
     if err != nil {
         return err
     }
     defer file.Close()
 
-    _, err = file.WriteString(content)
-    if err != nil {
-        return err
-    }
-
-    return nil
+    return t.Execute(file, data)
 }
 
 func (b *BaseHandler) createBaseDirs() error {
@@ -92,14 +104,14 @@ func (b *BaseHandler) createBaseDirs() error {
 }
 
 func (b *BaseHandler) initGit() error {
-    _, err := exec.LookPath("git")
-    if err != nil {
-        return err
+    var exists bool = utils.GitAvailable()
+    if exists {
+        return fmt.Errorf("Git isn't available")
     }
 
     var cmd *exec.Cmd = exec.Command("git", "init")
     cmd.Dir = b.Cfg.Name
-    if err = cmd.Run(); err != nil {
+    if err := cmd.Run(); err != nil {
         return err
     }
 

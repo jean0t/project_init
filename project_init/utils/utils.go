@@ -23,13 +23,7 @@ func GitAvailable() bool {
 }
 
 
-func GitInit(projectDir string) error {
-    cmd := exec.Command("git", "init")
-    cmd.Dir = projectDir
-    return cmd.Run()
-}
-
-func GetGitUserName() string {
+func GetGitUsername() string {
     if !GitAvailable() {
         return "<name>"
     }
