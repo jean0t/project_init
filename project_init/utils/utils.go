@@ -1,6 +1,9 @@
 package utils
 
-import "fmt"
+import (
+    "fmt"
+    "os/exec"
+)
 
 type Config struct {
     Name string
@@ -9,11 +12,12 @@ type Config struct {
     GitIgnore bool
 }
 
+
 type LanguageInterface interface {
     CreateDirectories(projectName string) error
     AddSampleFiles(projectName string) error
-    AddLicense() error
-    AddGitIgnore() error
+    AddLicense(projectName, license string) error
+    AddGitIgnore(projectName string) error
 }
 
 
@@ -30,3 +34,13 @@ func GetLanguageHandler(language string) (LanguageInterface, error) {
     }
 }
 
+func GitAvailable() bool {
+    _, err := exec.LookPath("git")
+    return err == nil
+}
+
+func GitInit(projectDir string) error {
+    cmd := exec.Command("git", "init")
+    cmd.Dir = projectDir
+    return cmd.Run()
+}
