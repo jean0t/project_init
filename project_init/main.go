@@ -1,6 +1,7 @@
 package main
 
 import (
+    "project_init/project_init/utils/handler"
     "project_init/project_init/utils"
     "project_init/project_init/cli"
     "fmt"
@@ -12,48 +13,17 @@ func main() {
     var projectConfig *utils.Config = new(utils.Config)
     cli.Cli(projectConfig)
 
-    langHandler, err := utils.GetLanguageHandler(projectConfig.Language)
+    langHandler, err := handler.GetLanguageHandler(projectConfig)
     if err != nil {
         fmt.Println(err)
-    }
-
-    err = langHandler.CreateDirectories(projectConfig.Name)
-    if err != nil {
-        fmt.Println("Error creating directories: ", err)
         os.Exit(1)
     }
 
-    err = langHandler.AddSampleFiles(projectConfig.Name)
-    if err != nil {
-        fmt.Println("Error creating sample files: ", err)
+    if err := langHandler.Scaffold(); err != nil {
+        fmt.Println("error: ", err)
         os.Exit(1)
     }
 
-    err = langHandler.AddLicense(projectConfig.Name, projectConfig.License)
-    if err != nil {
-        fmt.Println("Error creating LICENSE: ", err)
-        os.Exit(1)
-    }
-    fmt.Printf("%s/%s created\n", projectConfig.Name, "LICENSE")
-
-    err = langHandler.AddGitIgnore(projectConfig.Name)
-    if err != nil {
-        fmt.Println("Error creating .gitignore: ", err)
-        os.Exit(1)
-    }
-    fmt.Printf("%s/%s created\n", projectConfig.Name, ".gitignore")
-
-    err = utils.CreateReadme(projectConfig.Name, projectConfig.License)
-    if err != nil {
-        fmt.Println("README.md error: ", err)
-        os.Exit(1)
-    }
-    fmt.Printf("%s/%s created\n", projectConfig.Name, "README.md")
-
-    if utils.GitAvailable() {
-        utils.GitInit(projectConfig.Name)
-        fmt.Println("Git was initialized")
-    }
 
     fmt.Printf("Project %s with %s language created successfully\n", projectConfig.Name, projectConfig.Language)
 }
