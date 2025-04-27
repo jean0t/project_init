@@ -1,4 +1,4 @@
-**project_init**  
+# **project_init**  
 
 A simple CLI tool to bootstrap new projects with opinionated defaults.  
 
