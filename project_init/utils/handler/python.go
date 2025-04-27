@@ -15,6 +15,14 @@ func NewPythonHandler(cfg *utils.Config, dirs []string) Handler {
     return &PythonHandler{BaseHandler: &BaseHandler{Cfg: cfg, Dirs: dirs}}
 }
 
+func (p *PythonHandler) Scaffold() error {
+    if err := p.BaseHandler.ScaffoldCommon(); err != nil {
+        return err
+    }
+
+    return p.createLanguageExtras()
+}
+
 func (p *PythonHandler) createLanguageExtras() error {
     var mainFile string = filepath.Join(p.Cfg.Name, "src", "main.py")
     var content string = `def main():

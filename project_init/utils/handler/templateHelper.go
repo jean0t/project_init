@@ -7,24 +7,25 @@ import (
 )
 
 //go:embed templates/licenses/mit.txt
-var mitTmpl string
+var MitTmpl string
 
 //go:embed templates/licenses/gpl_3.txt
-var gpl3Tmpl string
+var Gpl3Tmpl string
 
 //go:embed templates/readme.md.tmpl
-var readmeTmpl string
+var ReadmeTmpl string
 
 
 type Data struct {
     Author string
     Year int
-    Name string //name of the project
+    Name string // name of project
+    License string
 }
 
-func CreateData(name string) Data {
+func CreateData(name, license string) Data {
     year := time.Now().Year()
     author := utils.GetGitUsername()
 
-    return Data{Author: author, Year: year, Name: name}
+    return Data{Author: author, Year: year, Name: name, License: license}
 }

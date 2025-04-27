@@ -16,25 +16,21 @@ type BaseHandler struct {
     Dirs []string
 }
 
-func (b *BaseHandler) Scaffold() error {
+func (b *BaseHandler) ScaffoldCommon() error {
     if err := b.createBaseDirs(); err != nil {
         return err
     }
 
-    if err = b.createReadme(); err != nil {
+    if err := b.createReadme(); err != nil {
         return err
     }
 
-    if err = b.createLicense(); err != nil {
+    if err := b.createLicense(); err != nil {
         return err
     }
 
-    if err = b.initGit(); err != nil {
-        return err
-    }
-
-    if err = b.createLanguageExtras(); err != nil {
-        return err
+    if err := b.initGit(); err != nil {
+        fmt.Println("Git isn't available, git won't be initialized in the project.")
     }
 
     return nil
@@ -42,21 +38,26 @@ func (b *BaseHandler) Scaffold() error {
 
 func (b *BaseHandler) createLicense() error {
     var licensePath string = filepath.Join(b.Cfg.Name, "LICENSE")
-    var data Data = CreateData(b.Cfg.Name)
-    var template *template.Template
+    var data Data = CreateData(b.Cfg.Name, b.Cfg.License)
+    var tmpl *template.Template
 
     switch strings.ToLower(b.Cfg.License) {
         case "gpl-3":
-            template, err := template.New("gpl-3").Parse(gpl3Tmpl)
+            var err error
+            tmpl, err = template.New("gpl-3").Parse(Gpl3Tmpl)
             if err != nil {
                 return err
             }
 
         case "mit":
-            template, err := template.New("gpl-3").Parse(mitTmpl)
+            var err error
+            tmpl, err = template.New("gpl-3").Parse(MitTmpl)
             if err != nil {
                 return err
             }
+
+        default:
+                return fmt.Errorf("unsupported license type: %s", b.Cfg.License)
     }
 
     file, err := os.Create(licensePath)
@@ -65,24 +66,24 @@ func (b *BaseHandler) createLicense() error {
     }
     defer file.Close()
 
-    return t.Execute(file, data)
+    return tmpl.Execute(file, data)
 }
 
 func (b *BaseHandler) createReadme() error {
     var licensePath string = filepath.Join(b.Cfg.Name, "README.md")
-    tmpl, err := template.New("readme").Parse(readmeTmpl)
+    tmpl, err := template.New("readme").Parse(ReadmeTmpl)
     if err != nil {
         return err
     }
 
-    var data Data = CreateData(b.Cfg.Name)
+    var data Data = CreateData(b.Cfg.Name, b.Cfg.License)
     file, err := os.Create(licensePath)
     if err != nil {
         return err
     }
     defer file.Close()
 
-    return t.Execute(file, data)
+    return tmpl.Execute(file, data)
 }
 
 func (b *BaseHandler) createBaseDirs() error {
@@ -105,7 +106,7 @@ func (b *BaseHandler) createBaseDirs() error {
 
 func (b *BaseHandler) initGit() error {
     var exists bool = utils.GitAvailable()
-    if exists {
+    if !exists {
         return fmt.Errorf("Git isn't available")
     }
 
@@ -117,8 +118,4 @@ func (b *BaseHandler) initGit() error {
 
     fmt.Println("Git initialized")
     return nil
-}
-
-func (b *BaseHandler) createLanguageExtras() error {
-    return fmt.Errorf("Implementation not created")
 }

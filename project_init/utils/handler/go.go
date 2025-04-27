@@ -15,8 +15,16 @@ func NewGoHandler(cfg *utils.Config, dirs []string) Handler {
     return &GoHandler{BaseHandler: &BaseHandler{Cfg: cfg, Dirs: dirs}}
 }
 
+func (g *GoHandler) Scaffold() error {
+    if err := g.BaseHandler.ScaffoldCommon(); err != nil {
+        return err
+    }
+
+    return g.createLanguageExtras()
+}
+
 func (g *GoHandler) createLanguageExtras() error {
-    var mainFile string = filepath.Join(p.Cfg.Name, "cmd", "main.go")
+    var mainFile string = filepath.Join(g.Cfg.Name, "cmd", "main.go")
     var content string = `package main
 import "fmt"
 

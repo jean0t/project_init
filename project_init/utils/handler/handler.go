@@ -14,10 +14,10 @@ type Handler interface {
 func GetLanguageHandler(cfg *utils.Config) (Handler, error) {
     switch strings.ToLower(cfg.Language) {
         case "go":
-            return NewGoHandler(cfg), nil
+            return NewGoHandler(cfg, []string{"cmd", "pkg", "internal"}), nil
 
         case "python":
-            return NewPythonHandler(cfg), nil
+            return NewPythonHandler(cfg, []string{"src", "tests", "docs"}), nil
 
         default:
             return nil, fmt.Errorf("Unsupported language %q", cfg.Language)

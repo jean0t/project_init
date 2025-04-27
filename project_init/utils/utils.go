@@ -1,12 +1,8 @@
 package utils
 
 import (
-    "fmt"
     "os/exec"
-    "path/filepath"
-    "os"
     "strings"
-    "project_init/project_init/utils/handler"
 )
 
 type Config struct {
