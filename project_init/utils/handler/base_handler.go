@@ -20,15 +20,19 @@ func (b *BaseHandler) Scaffold() error {
         return err
     }
 
-    if err := b.createLicense(); err != nil {
+    if err = b.createReadme(); err != nil {
         return err
     }
 
-    if err := b.initGit(); err != nil {
+    if err = b.createLicense(); err != nil {
         return err
     }
 
-    if err := b.createLanguageExtras(); err != nil {
+    if err = b.initGit(); err != nil {
+        return err
+    }
+
+    if err = b.createLanguageExtras(); err != nil {
         return err
     }
 
@@ -37,6 +41,23 @@ func (b *BaseHandler) Scaffold() error {
 
 func (b *BaseHandler) createLicense() error {
     var licensePath string = filepath.Join(b.Cfg.Name, "LICENSE")
+    var content string = "test"
+    file, err := os.Create(licensePath)
+    if err != nil {
+        return err
+    }
+    defer file.Close()
+
+    _, err = file.WriteString(content)
+    if err != nil {
+        return err
+    }
+
+    return nil
+}
+
+func (b *BaseHandler) createReadme() error {
+    var licensePath string = filepath.Join(b.Cfg.Name, "README.md")
     var content string = "test"
     file, err := os.Create(licensePath)
     if err != nil {

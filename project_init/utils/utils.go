@@ -48,34 +48,3 @@ func GetGitUserName() string {
     return name
 }
 
-func CreateReadme(projectName, license string) error {
-    var readmeTemplate string = `# %s
-
-A brief description of what the project does.
-
-## Installation
-
-Instructions to install or build.
-
-## Usage
-
-Examples of how to run the project.
-
-## License
-
-%s © <year> <your name>
-`
-    readmeFile := filepath.Join(projectName, "README.md")
-    file, err := os.Create(readmeFile)
-    if err != nil {
-        return fmt.Errorf("It couldn't create the README.md file")
-    }
-    defer file.Close()
-
-    _, err = file.WriteString(fmt.Sprintf(readmeTemplate, projectName, license))
-    if err != nil {
-        return fmt.Errorf("It couldn't write the README.md contents")
-    }
-
-    return nil
-}
