@@ -11,7 +11,8 @@ A simple CLI tool to bootstrap new projects with opinionated defaults.
 - Initializes a Git repository (`git init`)  
 - Adds a sensible `.gitignore`  
 - Supports **Go** and **Python** out of the box  
-- CLI-driven—no GUI  
+- CLI-driven—no GUI
+- Adds a `README.md` file  
 
 ---
 
