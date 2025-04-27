@@ -43,6 +43,13 @@ func main() {
     }
     fmt.Printf("%s/%s created\n", projectConfig.Name, ".gitignore")
 
+    err = utils.CreateReadme(projectConfig.Name, projectConfig.License)
+    if err != nil {
+        fmt.Println("README.md error: ", err)
+        os.Exit(1)
+    }
+    fmt.Printf("%s/%s created\n", projectConfig.Name, "README.md")
+
     if utils.GitAvailable() {
         utils.GitInit(projectConfig.Name)
         fmt.Println("Git was initialized")
