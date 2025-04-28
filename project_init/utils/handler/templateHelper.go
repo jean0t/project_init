@@ -15,6 +15,12 @@ var Gpl3Tmpl string
 //go:embed templates/readme.md.tmpl
 var ReadmeTmpl string
 
+//go:embed templates/go/gitignore.tmpl
+var GoGitIgnoreTmpl string
+
+//go:embed templates/python/gitignore.tmpl
+var PythonGitIgnoreTmpl string
+
 
 type Data struct {
     Author string

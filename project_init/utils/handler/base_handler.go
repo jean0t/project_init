@@ -29,6 +29,13 @@ func (b *BaseHandler) ScaffoldCommon() error {
         return err
     }
 
+    if b.Cfg.GitIgnore {
+        if err := b.createGitIgnore(); err != nil {
+            return err
+        }
+        fmt.Println(".gitignore created")
+    }
+
     if err := b.initGit(); err != nil {
         fmt.Println("Git isn't available, git won't be initialized in the project.")
     }
@@ -85,6 +92,33 @@ func (b *BaseHandler) createReadme() error {
 
     return tmpl.Execute(file, data)
 }
+
+
+func (b *BaseHandler) createGitIgnore() error {
+    var licensePath string = filepath.Join(b.Cfg.Name, ".gitignore")
+    var content string = ""
+
+    switch strings.ToLower(b.Cfg.Language) {
+        case "go":
+            content = GoGitIgnoreTmpl
+
+        case "python":
+            content = PythonGitIgnoreTmpl
+
+        default:
+                return fmt.Errorf(".gitignore for the language %s isn't available", b.Cfg.Language)
+    }
+
+    file, err := os.Create(licensePath)
+    if err != nil {
+        return err
+    }
+    defer file.Close()
+    
+    _, err = file.WriteString(content)
+    return err
+}
+
 
 func (b *BaseHandler) createBaseDirs() error {
     var paths []string = []string {b.Cfg.Name}
