@@ -9,8 +9,8 @@ import (
 
 
 func Cli(config *utils.Config) {
-    flag.StringVar(&config.Language, "lang", "python", "Programming Language to the project (default Python)")
-    flag.StringVar(&config.License, "license", "gpl-3", "License to use (MIT or GPL-3; defaults to GPL-3)")
+    flag.StringVar(&config.Language, "lang", "python", "Programming Language to the project")
+    flag.StringVar(&config.License, "license", "gpl-3", "License to use (MIT or GPL-3)")
     flag.BoolVar(&config.GitIgnore, "gitignore", false, "Include a .gitignore file")
 
     flag.Usage = func() {
@@ -26,6 +26,11 @@ func Cli(config *utils.Config) {
         fmt.Println("Error: project_name is missing")
         flag.Usage()
         os.Exit(1)
+    }
+
+    if args[0] == "version" {
+        fmt.Println("version 2.3")
+        os.Exit(0)
     }
 
     config.Name = args[0]
