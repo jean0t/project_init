@@ -102,9 +102,8 @@ Examples of how to run the project.
 ## To-Do
 
 - [ ] Add support for more languages (e.g., JavaScript, Rust, Java)  
-- [ ] Enhance templates (customizable README, code samples)  
-- [ ] Allow custom license text or additional license types  
-- [ ] Add automated tests for scaffolded projects  
+- [x] Enhance templates (customizable README, code samples)  
+- [x] Allow custom license text or additional license types  
 
 ---
 
