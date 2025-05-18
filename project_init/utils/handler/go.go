@@ -27,12 +27,8 @@ func (g *GoHandler) Scaffold() error {
 
 func (g *GoHandler) createLanguageExtras() error {
     var mainFile string = filepath.Join(g.Cfg.Name, "cmd", "main.go")
-    var content string = `package main
-import "fmt"
+    var content string = GoSampleCode
 
-func main() {
-    fmt.Println("Hello World!")
-}`
     file, err := os.Create(mainFile)
     if err != nil {
         return err

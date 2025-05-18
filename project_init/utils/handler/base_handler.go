@@ -102,7 +102,25 @@ func (b *BaseHandler) createGitIgnore() error {
         case "go":
             content = GoGitIgnoreTmpl
 
+        case "golang":
+            content = GoGitIgnoreTmpl
+
+        case "c":
+            content = CGitIgnoreTmpl
+
+        case "javascript":
+            content = JavascriptGitIgnoreTmpl
+
+        case "js":
+            content = JavascriptGitIgnoreTmpl
+
+        case "java":
+            content = JavaGitIgnoreTmpl
+
         case "python":
+            content = PythonGitIgnoreTmpl
+
+        case "py":
             content = PythonGitIgnoreTmpl
 
         default:

@@ -25,12 +25,8 @@ func (p *PythonHandler) Scaffold() error {
 
 func (p *PythonHandler) createLanguageExtras() error {
     var mainFile string = filepath.Join(p.Cfg.Name, "src", "main.py")
-    var content string = `def main():
-    print("Hello World!")
+    var content string = PythonSampleCode
 
-if __name__ == "__main__":
-    main()
-`
     file, err := os.Create(mainFile)
     if err != nil {
         return err

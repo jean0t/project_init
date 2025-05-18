@@ -15,12 +15,41 @@ var Gpl3Tmpl string
 //go:embed templates/readme.md.tmpl
 var ReadmeTmpl string
 
+//========================================= Gitignore template
+
 //go:embed templates/go/gitignore.tmpl
 var GoGitIgnoreTmpl string
 
 //go:embed templates/python/gitignore.tmpl
 var PythonGitIgnoreTmpl string
 
+//go:embed templates/javascript/gitignore.tmpl
+var JavascriptGitIgnoreTmpl string
+
+//go:embed templates/java/gitignore.tmpl
+var JavaGitIgnoreTmpl string
+
+//go:embed templates/c/gitignore.tmpl
+var CGitIgnoreTmpl string
+
+//========================================= Sample Codes
+
+//go:embed templates/python/sample_code.tmpl
+var PythonSampleCode string
+
+//go:embed templates/go/sample_code.tmpl
+var GoSampleCode string
+
+//go:embed templates/javascript/sample_code.tmpl
+var JavascriptSampleCode string
+
+//go:embed templates/java/sample_code.tmpl
+var JavaSampleCode string
+
+//go:embed templates/c/sample_code.tmpl
+var CSampleCode string
+
+//==========================================
 
 type Data struct {
     Author string
