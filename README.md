@@ -44,7 +44,7 @@ project_init -lang <go|python> [-license <mit|gpl-3>] [-gitignore=<true|false>] 
 
 | Flag          | Description                                              | Default   |
 |---------------|----------------------------------------------------------|-----------|
-| `-lang`      | Language scaffold to generate (`go` or `python`)         | `python`  |
+| `-lang`      | Language scaffold to generate         | `python`  |
 | `-license`   | License type (`mit` or `gpl-3`)                          | `gpl-3`   |
 | `-gitignore` | Include a `.gitignore` file (`true` or `false`)          | `true`    |
 
@@ -101,7 +101,7 @@ Examples of how to run the project.
 
 ## To-Do
 
-- [ ] Add support for more languages (e.g., JavaScript, Rust, Java)  
+- [x] Add support for more languages  
 - [x] Enhance templates (customizable README, code samples)  
 - [x] Allow custom license text or additional license types  
 
