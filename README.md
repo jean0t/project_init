@@ -10,7 +10,7 @@ A simple CLI tool to bootstrap new projects with opinionated defaults.
 - Adds a `LICENSE` file (MIT or GPL-3)  
 - Initializes a Git repository (`git init`)  
 - Adds a sensible `.gitignore`  
-- Supports **Go** and **Python** out of the box  
+- Supports **Go**, **Python**, **C**, **Java** and **Javascript**
 - CLI-driven—no GUI
 - Adds a `README.md` file  
 
